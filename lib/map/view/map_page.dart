@@ -7,56 +7,83 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_map/flutter_map.dart';
 import 'package:info_traffic_976/counter/counter.dart';
+import 'package:info_traffic_976/app/app.dart';
 import 'package:info_traffic_976/l10n/l10n.dart';
+import 'package:latlong2/latlong.dart';
 
-class CounterPage extends StatelessWidget {
-  const CounterPage({Key? key}) : super(key: key);
+class MapPage extends StatelessWidget {
+  const MapPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => CounterCubit(),
-      child: const CounterView(),
+      child: const MapView(),
     );
   }
 }
 
-class CounterView extends StatelessWidget {
-  const CounterView({Key? key}) : super(key: key);
+class MapView extends StatelessWidget {
+  const MapView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.counterAppBarTitle)),
-      body: const Center(child: CounterText()),
+      appBar: AppBar(
+        title: const Text("test"),
+      ),
+      body: const Center(child: MapText()),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           FloatingActionButton(
             onPressed: () => context.read<CounterCubit>().increment(),
-            child: const Icon(Icons.add),
+            child: const Icon(Icons.gps_fixed),
           ),
           const SizedBox(height: 8),
-          FloatingActionButton(
-            onPressed: () => context.read<CounterCubit>().decrement(),
-            child: const Icon(Icons.remove),
-          ),
         ],
       ),
     );
   }
 }
 
-class CounterText extends StatelessWidget {
-  const CounterText({Key? key}) : super(key: key);
+class MapText extends StatelessWidget {
+  const MapText({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final count = context.select((CounterCubit cubit) => cubit.state);
-    return Text('$count', style: theme.textTheme.headline1);
+    return FlutterMap(
+      options: MapOptions(
+        bounds: LatLngBounds(LatLng(-13.005896,45.011673),LatLng(-12.619567,45.315170)),
+        zoom: 13,
+      ),
+      layers: [
+        TileLayerOptions(
+          urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+          subdomains: ['a', 'b', 'c'],
+          attributionBuilder: (_) {
+            return const Text('© OpenStreetMap contributors');
+          },
+        ),
+        MarkerLayerOptions(
+          markers: [
+            Marker(
+              width: 80.0,
+              height: 80.0,
+              point: LatLng(-12.8555212, 45.1053644),
+              builder: (ctx) => const Icon(
+                    Icons.location_pin,
+                    size: 30,
+                    color: Colors.blueAccent,
+                  ),
+            ),
+          ],
+        ),
+      ],
+    );
   }
 }
