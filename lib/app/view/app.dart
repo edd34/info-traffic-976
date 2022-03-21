@@ -42,6 +42,7 @@ class MyStatefulWidget extends StatefulWidget {
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   int _selectedIndex = 0;
+  String _title = "Carte routière";
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
@@ -52,6 +53,16 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+      switch (_selectedIndex) {
+        case 0:
+          _title = 'Carte routière';
+          break;
+        case 1:
+          _title = 'Ajouter alerte';
+          break;
+        default:
+          _title = 'Info Traffic 976';
+      }
     });
   }
 
@@ -87,6 +98,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         ),
       ),
       appBar: AppBar(
+        title: Text(_title),
         centerTitle: true,
         backgroundColor: Colors.indigo,
         elevation: 10,
