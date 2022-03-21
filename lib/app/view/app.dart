@@ -42,9 +42,11 @@ class MyStatefulWidget extends StatefulWidget {
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   int _selectedIndex = 0;
-  String _title = "Carte routière";
+  String _title = 'Carte routière';
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+
+  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   static const List<Widget> _widgetOptions = <Widget>[
     MapPage(),
     AlertAddPage(),
@@ -69,31 +71,46 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
       drawer: Drawer(
-        elevation: 16,
-        child: Column(
-          children: const [
-            UserAccountsDrawerHeader(
-              accountName: Text("Dania's Blof"),
-              accountEmail: Text('www.daniasblog.com'),
-              currentAccountPicture: CircleAvatar(
-                backgroundColor: Colors.white,
-                child: Text(
-                  'DB',
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              //header of drawer
+              decoration: BoxDecoration(
+                color: Colors.indigo,
+              ),
+              child: Text(
+                'Menu',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
                 ),
               ),
             ),
             ListTile(
-              title: Text('Profile'),
-              leading: Icon(Icons.face),
-            ),
-            Divider(
-              height: 0.1,
+              //menu item of Drawer
+              leading: Icon(Icons.home),
+              title: Text('Accueil'),
             ),
             ListTile(
-              title: Text('Wishlist'),
-              leading: Icon(Icons.favorite),
-            )
+              leading: Icon(Icons.account_circle),
+              title: Text('Mon profil'),
+            ),
+            ListTile(
+              leading: Icon(Icons.settings),
+              title: Text('Paramètres'),
+            ),
+            ListTile(
+                onTap: () {
+                  if (scaffoldKey.currentState!.isDrawerOpen) {
+                    //check if drawer is open
+                    Navigator.pop(context); //context of drawer is different
+                  }
+                },
+                leading: Icon(Icons.info),
+                title: Text("À propos"))
           ],
         ),
       ),
@@ -107,7 +124,12 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         //space between leading icon and title
         leading: IconButton(
           icon: const Icon(Icons.menu),
-          onPressed: () {},
+          onPressed: () {
+            if (!scaffoldKey.currentState!.isDrawerOpen) {
+              //check if drawer is closed
+              scaffoldKey.currentState?.openDrawer(); //open drawer
+            }
+          },
         ),
         actions: [
           IconButton(
