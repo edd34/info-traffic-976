@@ -7,9 +7,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:info_traffic_976/alert/alert.dart';
 import 'package:info_traffic_976/l10n/l10n.dart';
 import 'package:info_traffic_976/map/map.dart';
-import 'package:info_traffic_976/alert/alert.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
@@ -33,7 +33,6 @@ class App extends StatelessWidget {
   }
 }
 
-
 class MyStatefulWidget extends StatefulWidget {
   const MyStatefulWidget({Key? key}) : super(key: key);
 
@@ -44,18 +43,10 @@ class MyStatefulWidget extends StatefulWidget {
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
-  TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
     MapPage(),
     AlertAddPage(),
-    Text(
-      'Index 1: Business',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 1: Business',
-      style: optionStyle,
-    ),
   ];
 
   void _onItemTapped(int index) {
@@ -68,31 +59,33 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: Drawer(
-          elevation: 16,
-          child: Column(
-            children: const [
-              UserAccountsDrawerHeader(
-                accountName: Text('Dania\'s Blof'),
-                accountEmail: Text('www.daniasblog.com'),
-                currentAccountPicture: CircleAvatar(
-                  backgroundColor: Colors.white,
-                  child: Text('DB', ),
+        elevation: 16,
+        child: Column(
+          children: const [
+            UserAccountsDrawerHeader(
+              accountName: Text("Dania's Blof"),
+              accountEmail: Text('www.daniasblog.com'),
+              currentAccountPicture: CircleAvatar(
+                backgroundColor: Colors.white,
+                child: Text(
+                  'DB',
                 ),
               ),
-              ListTile(
-                title: Text('Profile'),
-                leading: Icon(Icons.face),
-              ),
-              Divider(
-                height: 0.1,
-              ),
-              ListTile(
-                title: Text('Wishlist'),
-                leading: Icon(Icons.favorite),
-              )
-            ],
-          ),
+            ),
+            ListTile(
+              title: Text('Profile'),
+              leading: Icon(Icons.face),
+            ),
+            Divider(
+              height: 0.1,
+            ),
+            ListTile(
+              title: Text('Wishlist'),
+              leading: Icon(Icons.favorite),
+            )
+          ],
         ),
+      ),
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Colors.indigo,
@@ -101,17 +94,17 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         titleSpacing: 10,
         //space between leading icon and title
         leading: IconButton(
-          icon: Icon(Icons.menu),
+          icon: const Icon(Icons.menu),
           onPressed: () {},
         ),
         actions: [
           IconButton(
             onPressed: () {},
-            icon: Icon(Icons.notifications_none),
+            icon: const Icon(Icons.notifications_none),
           ),
           IconButton(
             onPressed: () {},
-            icon: Icon(Icons.search),
+            icon: const Icon(Icons.supervised_user_circle),
           )
         ],
       ),
@@ -128,11 +121,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             icon: Icon(Icons.add),
             label: 'Ajouter',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.directions_car_rounded),
-            label: 'Covoit',
-          ),
-
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.amber[800],

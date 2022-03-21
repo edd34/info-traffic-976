@@ -7,10 +7,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_map/flutter_map.dart';
 import 'package:info_traffic_976/counter/counter.dart';
 import 'package:info_traffic_976/l10n/l10n.dart';
-import 'package:latlong2/latlong.dart';
 
 class AlertAddPage extends StatelessWidget {
   const AlertAddPage({Key? key}) : super(key: key);
@@ -30,19 +28,8 @@ class AlertAddView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    return Scaffold(
-      body: const Center(child: GridLayout()),
-      floatingActionButton: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          FloatingActionButton(
-            onPressed: () => context.read<CounterCubit>().increment(),
-            child: const Icon(Icons.gps_fixed),
-          ),
-          const SizedBox(height: 8),
-        ],
-      ),
+    return const Scaffold(
+      body: Center(child: GridLayout()),
     );
   }
 }
@@ -53,17 +40,18 @@ class GridLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.count(
-        // Create a grid with 2 columns. If you change the scrollDirection to
-        // horizontal, this produces 2 rows.
-        crossAxisCount: 2,
-        // Generate 100 widgets that display their index in the List.
-        children: List.generate(10, (index) {
-      return Center(
-        child: Text(
-          'Item $index',
-          style: Theme.of(context).textTheme.headline5,
-        ),
-      );
-    }),
-    );}
+      // Create a grid with 2 columns. If you change the scrollDirection to
+      // horizontal, this produces 2 rows.
+      crossAxisCount: 2,
+      // Generate 100 widgets that display their index in the List.
+      children: List.generate(10, (index) {
+        return Center(
+          child: Text(
+            'Item $index',
+            style: Theme.of(context).textTheme.headline5,
+          ),
+        );
+      }),
+    );
+  }
 }

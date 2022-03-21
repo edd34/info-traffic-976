@@ -32,16 +32,14 @@ class MapView extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("test"),
-      ),
+
       body: const Center(child: MapText()),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           FloatingActionButton(
-            onPressed: () => context.read<CounterCubit>().increment(),
+            onPressed: () => null,
             child: const Icon(Icons.gps_fixed),
           ),
           const SizedBox(height: 8),
@@ -58,7 +56,8 @@ class MapText extends StatelessWidget {
   Widget build(BuildContext context) {
     return FlutterMap(
       options: MapOptions(
-        bounds: LatLngBounds(LatLng(-13.005896,45.011673),LatLng(-12.619567,45.315170)),
+        bounds: LatLngBounds(
+            LatLng(-13.005896, 45.011673), LatLng(-12.619567, 45.315170)),
         zoom: 13,
       ),
       layers: [
@@ -76,10 +75,10 @@ class MapText extends StatelessWidget {
               height: 80.0,
               point: LatLng(-12.8555212, 45.1053644),
               builder: (ctx) => const Icon(
-                    Icons.location_pin,
-                    size: 30,
-                    color: Colors.blueAccent,
-                  ),
+                Icons.location_pin,
+                size: 30,
+                color: Colors.blueAccent,
+              ),
             ),
           ],
         ),
