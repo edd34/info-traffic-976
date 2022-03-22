@@ -39,7 +39,7 @@ class MapView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           FloatingActionButton(
-            onPressed: () => null,
+            onPressed: () => print("gps pressed"),
             child: const Icon(Icons.gps_fixed),
           ),
           const SizedBox(height: 8),

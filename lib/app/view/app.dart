@@ -134,12 +134,12 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         actions: [
           IconButton(
             onPressed: () {},
-            icon: const Icon(Icons.notifications_none),
+            icon: const Icon(Icons.refresh),
           ),
           IconButton(
             onPressed: () {},
-            icon: const Icon(Icons.supervised_user_circle),
-          )
+            icon: const Icon(Icons.sort),
+          ),
         ],
       ),
       body: Center(
