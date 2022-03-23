@@ -8,6 +8,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:info_traffic_976/alert/alert.dart';
+import 'package:info_traffic_976/alert/services/AlertAPI.dart';
 import 'package:info_traffic_976/alert/providers/alert_providers.dart';
 import 'package:info_traffic_976/l10n/l10n.dart';
 import 'package:info_traffic_976/map/map.dart';
@@ -56,6 +57,12 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     MapPage(),
     AlertAddPage(),
   ];
+
+  void printAlert(BuildContext context) async {
+    final alertProvider = Provider.of<AlertProvider>(context, listen: false);
+    var res = await AlertAPIHelper.getAlertTable();
+    alertProvider.setAlertTable(res.data);
+  }
 
   void _onItemTapped(int index) {
     setState(() {
@@ -138,7 +145,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              printAlert(context);
+            },
             icon: const Icon(Icons.refresh),
           ),
           IconButton(
