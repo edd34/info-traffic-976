@@ -22,4 +22,5 @@ class AlertProvider extends ChangeNotifier {
   }
 
   int get postsAlertTableLength => _alertTable.length;
+  bool get alertTableIsEmpty => _alertTable.isEmpty;
 }
