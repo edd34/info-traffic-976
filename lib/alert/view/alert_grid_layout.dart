@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:info_traffic_976/alert/providers/alert_providers.dart';
+import 'package:info_traffic_976/alert/services/AlertAPI.dart';
 import 'package:provider/provider.dart';
 
 class GridLayout extends StatelessWidget {
@@ -7,16 +8,26 @@ class GridLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final alertProvider = Provider.of<AlertProvider>(context);
     return GridView.count(
       // Create a grid with 2 columns. If you change the scrollDirection to
       // horizontal, this produces 2 rows.
-      crossAxisCount: 3,
+      crossAxisCount: 2,
       // Generate 100 widgets that display their index in the List.
-      children: List.generate(15, (index) {
+      children: List.generate(alertProvider.alertTableLength, (index) {
+        String alertCateogry = alertProvider.alertTable[index].category;
+        String alertType = alertProvider.alertTable[index].alertType;
+        String alertSubType = alertProvider.alertTable[index].alertSubtype;
         return Center(
-          child: Text(
-            'Item $index',
-            style: Theme.of(context).textTheme.headline5,
+          child: Column(
+            children: [
+              Text(
+                // '$alertCateogry',
+                "",
+                style: Theme.of(context).textTheme.headline5,
+              ),
+              ElevatedButton(onPressed: () {}, child: Text(alertSubType))
+            ],
           ),
         );
       }),
