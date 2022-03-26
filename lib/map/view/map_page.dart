@@ -8,10 +8,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:info_traffic_976/alert/providers/traffic_alert.dart';
 import 'package:info_traffic_976/counter/counter.dart';
 import 'package:info_traffic_976/app/app.dart';
 import 'package:info_traffic_976/l10n/l10n.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:provider/provider.dart';
 
 class MapPage extends StatelessWidget {
   const MapPage({Key? key}) : super(key: key);
@@ -32,7 +34,6 @@ class MapView extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     return Scaffold(
-
       body: const Center(child: MapText()),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -54,6 +55,7 @@ class MapText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final trafficAlertProvider = Provider.of<TrafficAlertProvider>(context);
     return FlutterMap(
       options: MapOptions(
         bounds: LatLngBounds(
@@ -69,18 +71,34 @@ class MapText extends StatelessWidget {
           },
         ),
         MarkerLayerOptions(
-          markers: [
-            Marker(
+          markers: List.generate(
+            trafficAlertProvider.trafficAlertLength,
+            (index) => Marker(
               width: 80.0,
               height: 80.0,
-              point: LatLng(-12.8555212, 45.1053644),
+              point: LatLng(
+                trafficAlertProvider.trafficAlert[index].lat,
+                trafficAlertProvider.trafficAlert[index].lon,
+              ),
               builder: (ctx) => const Icon(
                 Icons.location_pin,
                 size: 30,
                 color: Colors.blueAccent,
               ),
             ),
-          ],
+          ),
+          // [
+          // Marker(
+          //   width: 80.0,
+          //   height: 80.0,
+          //   point: LatLng(-12.8555212, 45.1053644),
+          //   builder: (ctx) => const Icon(
+          //     Icons.location_pin,
+          //     size: 30,
+          //     color: Colors.blueAccent,
+          //   ),
+          // ),
+          // ],
         ),
       ],
     );

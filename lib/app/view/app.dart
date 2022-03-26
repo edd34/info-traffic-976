@@ -8,8 +8,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:info_traffic_976/alert/alert.dart';
+import 'package:info_traffic_976/alert/models/traffic_alert.dart';
+import 'package:info_traffic_976/alert/providers/traffic_alert.dart';
 import 'package:info_traffic_976/alert/services/AlertAPI.dart';
 import 'package:info_traffic_976/alert/providers/alert_providers.dart';
+import 'package:info_traffic_976/alert/services/TrafficAlertAPI.dart';
 import 'package:info_traffic_976/l10n/l10n.dart';
 import 'package:info_traffic_976/map/map.dart';
 import 'package:provider/provider.dart';
@@ -20,7 +23,10 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (context) => AlertProvider())],
+      providers: [
+        ChangeNotifierProvider(create: (context) => AlertProvider()),
+        ChangeNotifierProvider(create: (context) => TrafficAlertProvider())
+      ],
       child: MaterialApp(
         theme: ThemeData(
           appBarTheme: const AppBarTheme(color: Color(0xFF13B9FF)),
@@ -60,8 +66,15 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
   void printAlert(BuildContext context) async {
     final alertProvider = Provider.of<AlertProvider>(context, listen: false);
-    var res = await AlertAPIHelper.getAlertTable();
-    alertProvider.setAlertTable(res.data);
+    final trafficAlertProvider =
+        Provider.of<TrafficAlertProvider>(context, listen: false);
+    var res1 = await AlertAPIHelper.getAlertTable();
+    var res2 = await TrafficAlertAPIHelper.getTrafficAlert();
+    print(res1.data);
+    print(res2.data);
+    alertProvider.setAlertTable(res1.data);
+    trafficAlertProvider.setTrafficAlert(res2.data);
+    print(trafficAlertProvider.trafficAlert);
   }
 
   void _onItemTapped(int index) {
