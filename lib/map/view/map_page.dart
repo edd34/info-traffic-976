@@ -10,8 +10,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:info_traffic_976/alert/providers/traffic_alert.dart';
 import 'package:info_traffic_976/counter/counter.dart';
-import 'package:info_traffic_976/app/app.dart';
-import 'package:info_traffic_976/l10n/l10n.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
 
@@ -32,7 +30,6 @@ class MapView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = context.l10n;
     return Scaffold(
       body: const Center(child: MapText()),
       floatingActionButton: Column(
