@@ -11,4 +11,9 @@ class TrafficAlert {
 
   double lat = 0;
   double lon = 0;
+
+  @override
+  String toString() {
+    return 'TrafficAlert: {lat: $lat, lon: $lon}';
+  }
 }

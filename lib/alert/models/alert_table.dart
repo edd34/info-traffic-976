@@ -13,4 +13,9 @@ class AlertTable {
   String category = '';
   String alertType = '';
   String alertSubtype = '';
+
+  @override
+  String toString() {
+    return 'AlertTable: {category: $category, alertType: $alertType, alertSubtype: $alertSubtype}';
+  }
 }
