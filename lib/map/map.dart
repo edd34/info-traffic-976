@@ -5,5 +5,4 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
-export 'cubit/map_cubit.dart';
 export 'view/map_page.dart';
