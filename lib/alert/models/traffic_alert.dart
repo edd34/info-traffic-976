@@ -5,8 +5,8 @@ class TrafficAlert {
   );
 
   TrafficAlert.fromJson(Map<String, dynamic> _json) {
-    lat = double.tryParse(_json['lat']) as double;
-    lon = double.tryParse(_json['lon']) as double;
+    lat = double.tryParse(_json['lat'] as String) as double;
+    lon = double.tryParse(_json['lon'] as String) as double;
   }
 
   double lat = 0;

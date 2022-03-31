@@ -22,7 +22,8 @@ class TrafficAlertAPIHelper {
         /// ignore: implicit_dynamic_parameter, avoid_dynamic_calls
         body.forEach((e) {
           // ignore: omit_local_variable_types
-          final TrafficAlert trafficAlert = TrafficAlert.fromJson(e);
+          final TrafficAlert trafficAlert =
+              TrafficAlert.fromJson(e as Map<String, dynamic>);
           trafficAlertList.add(trafficAlert);
         });
         return HTTPResponse<List<TrafficAlert>>(

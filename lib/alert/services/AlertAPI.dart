@@ -21,7 +21,8 @@ class AlertAPIHelper {
         /// ignore: implicit_dynamic_parameter, avoid_dynamic_calls
         body.forEach((e) {
           // ignore: omit_local_variable_types
-          final AlertTable alertTable = AlertTable.fromJson(e);
+          final AlertTable alertTable =
+              AlertTable.fromJson(e as Map<String, dynamic>);
           alertTableList.add(alertTable);
         });
         return HTTPResponse<List<AlertTable>>(
