@@ -6,13 +6,11 @@
 // https://opensource.org/licenses/MIT.
 
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:info_traffic_976/alert/alert.dart';
 import 'package:info_traffic_976/alert/providers/alert_providers.dart';
 import 'package:info_traffic_976/alert/providers/traffic_alert.dart';
 import 'package:info_traffic_976/alert/services/AlertAPI.dart';
 import 'package:info_traffic_976/alert/services/TrafficAlertAPI.dart';
-import 'package:info_traffic_976/l10n/l10n.dart';
 import 'package:info_traffic_976/map/map.dart';
 import 'package:provider/provider.dart';
 
@@ -33,11 +31,6 @@ class App extends StatelessWidget {
             accentColor: const Color(0xFF13B9FF),
           ),
         ),
-        localizationsDelegates: const [
-          AppLocalizations.delegate,
-          GlobalMaterialLocalizations.delegate,
-        ],
-        supportedLocales: AppLocalizations.supportedLocales,
         home: const MyStatefulWidget(),
       ),
     );
