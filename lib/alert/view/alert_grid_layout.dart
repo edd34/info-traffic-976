@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:info_traffic_976/alert/providers/alert_providers.dart';
-import 'package:info_traffic_976/alert/services/AlertAPI.dart';
 import 'package:provider/provider.dart';
 
 class GridLayout extends StatelessWidget {
