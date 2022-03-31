@@ -59,10 +59,10 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   @override
   void initState() {
     super.initState();
-    printAlert(context);
+    refresh_alert(context);
   }
 
-  void printAlert(BuildContext context) async {
+  void refresh_alert(BuildContext context) async {
     final alertProvider = Provider.of<AlertProvider>(context, listen: false);
     final trafficAlertProvider =
         Provider.of<TrafficAlertProvider>(context, listen: false);
@@ -157,7 +157,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         actions: [
           IconButton(
             onPressed: () {
-              printAlert(context);
+              refresh_alert(context);
             },
             icon: const Icon(Icons.refresh),
           ),
