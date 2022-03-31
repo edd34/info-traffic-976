@@ -56,6 +56,12 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     AlertAddPage(),
   ];
 
+  @override
+  void initState() {
+    super.initState();
+    printAlert(context);
+  }
+
   void printAlert(BuildContext context) async {
     final alertProvider = Provider.of<AlertProvider>(context, listen: false);
     final trafficAlertProvider =
