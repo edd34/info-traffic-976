@@ -8,6 +8,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:info_traffic_976/alert/providers/traffic_alert.dart';
+import 'package:info_traffic_976/map/cached_tile_provider.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
 
@@ -57,6 +58,7 @@ class MapText extends StatelessWidget {
       layers: [
         TileLayerOptions(
           urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+          tileProvider: const CachedTileProvider(),
           subdomains: ['a', 'b', 'c'],
           attributionBuilder: (_) {
             return const Text('© OpenStreetMap contributors');
