@@ -100,7 +100,7 @@ class _MainExampleState extends State<MainExample> with OSMMixinObserver {
         lastGeoPoint.value = controller.listenerMapSingleTapping.value;
         await controller.addMarker(
           lastGeoPoint.value!,
-          markerIcon: MarkerIcon(
+          markerIcon: const MarkerIcon(
             icon: Icon(
               Icons.person_pin,
               color: Colors.red,
