@@ -16,6 +16,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   flutter_map: ^0.14.0
+  flutter_osm_plugin: ^0.32.2
   http: ^0.13.4
   intl: any
   latlong2: ^0.8.1

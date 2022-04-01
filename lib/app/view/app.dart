@@ -12,6 +12,7 @@ import 'package:info_traffic_976/alert/providers/traffic_alert.dart';
 import 'package:info_traffic_976/alert/services/alert_api.dart';
 import 'package:info_traffic_976/alert/services/traffic_alert_api.dart';
 import 'package:info_traffic_976/map/map.dart';
+import 'package:info_traffic_976/map/view/map_page_osm.dart';
 import 'package:provider/provider.dart';
 
 class App extends StatelessWidget {
@@ -50,7 +51,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   static const List<Widget> _widgetOptions = <Widget>[
-    MapPage(),
+    MainExample(),
     AlertAddPage(),
   ];
 
