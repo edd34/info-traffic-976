@@ -71,17 +71,17 @@ class _MainExampleState extends State<MainExample> with OSMMixinObserver {
           controller.listenerMapLongTapping.value!,
           markerIcon: MarkerIcon(
             iconWidget: SizedBox.fromSize(
-              size: Size.square(48),
+              size: const Size.square(48),
               child: Stack(
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.store,
                     color: Colors.brown,
                     size: 48,
                   ),
                   Text(
                     randNum,
-                    style: TextStyle(fontSize: 18),
+                    style: const TextStyle(fontSize: 18),
                   ),
                 ],
               ),
@@ -94,26 +94,26 @@ class _MainExampleState extends State<MainExample> with OSMMixinObserver {
     controller.listenerMapSingleTapping.addListener(() async {
       if (controller.listenerMapSingleTapping.value != null) {
         if (lastGeoPoint.value != null) {
-          controller.removeMarker(lastGeoPoint.value!);
+          await controller.removeMarker(lastGeoPoint.value!);
         }
         print(controller.listenerMapSingleTapping.value);
         lastGeoPoint.value = controller.listenerMapSingleTapping.value;
         await controller.addMarker(
           lastGeoPoint.value!,
           markerIcon: MarkerIcon(
-            // icon: Icon(
-            //   Icons.person_pin,
-            //   color: Colors.red,
-            //   size: 32,
-            // ),
-            assetMarker: AssetMarker(
-              image: AssetImage("asset/pin.png"),
+            icon: Icon(
+              Icons.person_pin,
+              color: Colors.red,
+              size: 32,
             ),
             // assetMarker: AssetMarker(
-            //   image: AssetImage("asset/pin.png"),
-            //   //scaleAssetImage: 2,
-            // ),
+            //   image: const AssetImage('asset/pin.png'),
           ),
+          // assetMarker: AssetMarker(
+          //   image: AssetImage("asset/pin.png"),
+          //   //scaleAssetImage: 2,
+          // ),
+
           //angle: -pi / 4,
         );
       }
@@ -140,8 +140,8 @@ class _MainExampleState extends State<MainExample> with OSMMixinObserver {
     //   ),
     // );
     await controller.setMarkerOfStaticPoint(
-      id: "line 2",
-      markerIcon: MarkerIcon(
+      id: 'line 2',
+      markerIcon: const MarkerIcon(
         icon: Icon(
           Icons.train,
           color: Colors.orange,
@@ -163,13 +163,13 @@ class _MainExampleState extends State<MainExample> with OSMMixinObserver {
           angle: pi / 2,
         ),
       ],
-      "line 2",
+      'line 2',
     );
     final bounds = await controller.bounds;
     print(bounds.toString());
     await controller.addMarker(
       GeoPoint(latitude: 47.442475, longitude: 8.4680389),
-      markerIcon: MarkerIcon(
+      markerIcon: const MarkerIcon(
         icon: Icon(
           Icons.car_repair,
           color: Colors.black45,
@@ -212,17 +212,17 @@ class _MainExampleState extends State<MainExample> with OSMMixinObserver {
                   advPickerNotifierActivation.value = false;
                   controller.cancelAdvancedPositionPicker();
                 },
-                icon: Icon(Icons.close),
+                icon: const Icon(Icons.close),
               );
             }
-            return SizedBox.shrink();
+            return const SizedBox.shrink();
           },
         ),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.info),
+            icon: const Icon(Icons.info),
             onPressed: () async {
-              await Navigator.popAndPushNamed(context, "/second");
+              await Navigator.popAndPushNamed(context, '/second');
             },
           ),
           Builder(builder: (ctx) {
@@ -233,7 +233,7 @@ class _MainExampleState extends State<MainExample> with OSMMixinObserver {
               },
               child: IconButton(
                 onPressed: () => roadActionBt(ctx),
-                icon: Icon(Icons.map),
+                icon: const Icon(Icons.map),
               ),
             );
           }),
@@ -243,16 +243,16 @@ class _MainExampleState extends State<MainExample> with OSMMixinObserver {
                   !visibilityZoomNotifierActivation.value;
               zoomNotifierActivation.value = !zoomNotifierActivation.value;
             },
-            icon: Icon(Icons.zoom_out_map),
+            icon: const Icon(Icons.zoom_out_map),
           ),
           IconButton(
             onPressed: () async {
-              await Navigator.pushNamed(context, "/picker-result");
+              await Navigator.pushNamed(context, '/picker-result');
             },
-            icon: Icon(Icons.search),
+            icon: const Icon(Icons.search),
           ),
           IconButton(
-            icon: Icon(Icons.select_all),
+            icon: const Icon(Icons.select_all),
             onPressed: () async {
               if (advPickerNotifierActivation.value == false) {
                 advPickerNotifierActivation.value = true;
@@ -273,31 +273,28 @@ class _MainExampleState extends State<MainExample> with OSMMixinObserver {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
+                  children: const [
                     CircularProgressIndicator(),
-                    Text("Map is Loading.."),
+                    Text('Chargement de la carte..'),
                   ],
                 ),
               ),
               onMapIsReady: (isReady) {
                 if (isReady) {
-                  print("map is ready");
+                  print('map is ready');
                 }
               },
               initZoom: 15,
               minZoomLevel: 3,
-              maxZoomLevel: 18,
-              stepZoom: 1.0,
               userLocationMarker: UserLocationMaker(
-                personMarker: MarkerIcon(
+                personMarker: const MarkerIcon(
                   icon: Icon(
                     Icons.location_history_rounded,
                     color: Colors.red,
                     size: 48,
                   ),
                 ),
-                directionArrowMarker: MarkerIcon(
+                directionArrowMarker: const MarkerIcon(
                   icon: Icon(
                     Icons.double_arrow,
                     size: 48,
@@ -305,41 +302,39 @@ class _MainExampleState extends State<MainExample> with OSMMixinObserver {
                 ),
               ),
               showContributorBadgeForOSM: true,
-              //trackMyPosition: trackingNotifier.value,
-              showDefaultInfoWindow: false,
               onLocationChanged: (myLocation) {
                 print(myLocation);
               },
               onGeoPointClicked: (geoPoint) async {
-                if (geoPoint ==
-                    GeoPoint(latitude: 47.442475, longitude: 8.4680389)) {
-                  await controller.setMarkerIcon(
-                      geoPoint,
-                      MarkerIcon(
-                        icon: Icon(
-                          Icons.bus_alert,
-                          color: Colors.blue,
-                          size: 24,
-                        ),
-                      ));
-                }
+                // if (geoPoint ==
+                //     GeoPoint(latitude: 47.442475, longitude: 8.4680389)) {
+                //   await controller.setMarkerIcon(
+                //       geoPoint,
+                //       const MarkerIcon(
+                //         icon: const Icon(
+                //           Icons.bus_alert,
+                //           color: Colors.blue,
+                //           size: 24,
+                //         ),
+                //       ));
+                // }
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(
-                      "${geoPoint.toMap().toString()}",
+                      '${geoPoint.toMap().toString()}',
                     ),
                     action: SnackBarAction(
                       onPressed: () =>
                           ScaffoldMessenger.of(context).hideCurrentSnackBar(),
-                      label: "hide",
+                      label: 'hide',
                     ),
                   ),
                 );
               },
               staticPoints: [
                 StaticPositionGeoPoint(
-                  "line 1",
-                  MarkerIcon(
+                  'line 1',
+                  const MarkerIcon(
                     icon: Icon(
                       Icons.train,
                       color: Colors.green,
@@ -367,28 +362,28 @@ class _MainExampleState extends State<MainExample> with OSMMixinObserver {
                     )*/
               ],
               roadConfiguration: RoadConfiguration(
-                startIcon: MarkerIcon(
+                startIcon: const MarkerIcon(
                   icon: Icon(
                     Icons.person,
                     size: 64,
                     color: Colors.brown,
                   ),
                 ),
-                middleIcon: MarkerIcon(
+                middleIcon: const MarkerIcon(
                   icon: Icon(Icons.location_history_sharp),
                 ),
                 roadColor: Colors.red,
               ),
               markerOption: MarkerOption(
-                defaultMarker: MarkerIcon(
+                defaultMarker: const MarkerIcon(
                   icon: Icon(
                     Icons.home,
                     color: Colors.orange,
                     size: 64,
                   ),
                 ),
-                advancedPickerMarker: MarkerIcon(
-                  icon: Icon(
+                advancedPickerMarker: const MarkerIcon(
+                  icon: const Icon(
                     Icons.location_searching,
                     color: Colors.green,
                     size: 64,
@@ -406,15 +401,15 @@ class _MainExampleState extends State<MainExample> with OSMMixinObserver {
                     visible: visible,
                     child: AnimatedOpacity(
                       opacity: visible ? 1.0 : 0.0,
-                      duration: Duration(milliseconds: 500),
+                      duration: const Duration(milliseconds: 500),
                       child: child,
                     ),
                   );
                 },
                 child: FloatingActionButton(
                   key: UniqueKey(),
-                  child: Icon(Icons.arrow_forward),
-                  heroTag: "confirmAdvPicker",
+                  child: const Icon(Icons.arrow_forward),
+                  heroTag: 'confirmAdvPicker',
                   onPressed: () async {
                     advPickerNotifierActivation.value = false;
                     GeoPoint p =
@@ -443,20 +438,20 @@ class _MainExampleState extends State<MainExample> with OSMMixinObserver {
                       onEnd: () {
                         visibilityZoomNotifierActivation.value = isVisible;
                       },
-                      duration: Duration(milliseconds: 500),
+                      duration: const Duration(milliseconds: 500),
                       child: child,
                     );
                   },
                   child: Column(
                     children: [
                       ElevatedButton(
-                        child: Icon(Icons.add),
+                        child: const Icon(Icons.add),
                         onPressed: () async {
                           controller.zoomIn();
                         },
                       ),
                       ElevatedButton(
-                        child: Icon(Icons.remove),
+                        child: const Icon(Icons.remove),
                         onPressed: () async {
                           controller.zoomOut();
                         },
@@ -473,7 +468,7 @@ class _MainExampleState extends State<MainExample> with OSMMixinObserver {
         valueListenable: showFab,
         builder: (ctx, isShow, child) {
           if (!isShow) {
-            return SizedBox.shrink();
+            return const SizedBox.shrink();
           }
           return child!;
         },
@@ -492,9 +487,9 @@ class _MainExampleState extends State<MainExample> with OSMMixinObserver {
             valueListenable: trackingNotifier,
             builder: (ctx, isTracking, _) {
               if (isTracking) {
-                return Icon(Icons.gps_off_sharp);
+                return const Icon(Icons.gps_off_sharp);
               }
-              return Icon(Icons.my_location);
+              return const Icon(Icons.my_location);
             },
           ),
         ),
@@ -508,7 +503,7 @@ class _MainExampleState extends State<MainExample> with OSMMixinObserver {
 
       ///selection geoPoint
       GeoPoint point = await controller.selectPosition(
-        icon: MarkerIcon(
+        icon: const MarkerIcon(
           icon: Icon(
             Icons.person_pin_circle,
             color: Colors.amber,
@@ -537,16 +532,15 @@ class _MainExampleState extends State<MainExample> with OSMMixinObserver {
           point, point2,
           roadType: notifierRoadType.value,
           //interestPoints: [pointM1, pointM2],
-          roadOption: RoadOption(
+          roadOption: const RoadOption(
             roadWidth: 10,
             roadColor: Colors.blue,
             showMarkerOfPOI: true,
-            zoomInto: true,
           ),
         );
         print(
-            "duration:${Duration(seconds: roadInformation.duration!.toInt()).inMinutes}");
-        print("distance:${roadInformation.distance}Km");
+            'duration:${Duration(seconds: roadInformation.duration!.toInt()).inMinutes}');
+        print('distance:${roadInformation.distance}Km');
         print(roadInformation.route.length);
         // final box = await BoundingBox.fromGeoPointsAsync([point2, point]);
         // controller.zoomToBoundingBox(
@@ -558,7 +552,7 @@ class _MainExampleState extends State<MainExample> with OSMMixinObserver {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            "${e.errorMessage()}",
+            '${e.errorMessage()}',
           ),
         ),
       );
@@ -568,7 +562,7 @@ class _MainExampleState extends State<MainExample> with OSMMixinObserver {
   @override
   Future<void> mapRestored() async {
     super.mapRestored();
-    print("log map restored");
+    print('log map restored');
   }
 
   void drawMultiRoads() async {
@@ -598,7 +592,7 @@ class _MainExampleState extends State<MainExample> with OSMMixinObserver {
             latitude: 47.3982152237,
             longitude: 8.4129691189,
           ),
-          roadOptionConfiguration: MultiRoadOption(
+          roadOptionConfiguration: const MultiRoadOption(
             roadColor: Colors.orange,
           )),
       MultiRoadConfiguration(
@@ -614,7 +608,7 @@ class _MainExampleState extends State<MainExample> with OSMMixinObserver {
     ];
     final listRoadInfo = await controller.drawMultipleRoad(
       configs,
-      commonRoadOption: MultiRoadOption(
+      commonRoadOption: const MultiRoadOption(
         roadColor: Colors.red,
       ),
     );
@@ -659,7 +653,7 @@ class RoadTypeChoiceWidget extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: const [
                       Icon(Icons.directions_car),
-                      Text("Car"),
+                      Text('Car'),
                     ],
                   ),
                 ),
@@ -672,7 +666,7 @@ class RoadTypeChoiceWidget extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: const [
                       Icon(Icons.directions_bike),
-                      Text("Bike"),
+                      Text('Bike'),
                     ],
                   ),
                 ),
@@ -685,7 +679,7 @@ class RoadTypeChoiceWidget extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: const [
                       Icon(Icons.directions_walk),
-                      Text("Foot"),
+                      Text('Foot'),
                     ],
                   ),
                 ),
