@@ -20,11 +20,6 @@ class GridLayout extends StatelessWidget {
         return Center(
           child: Column(
             children: [
-              Text(
-                // '$alertCateogry',
-                "",
-                style: Theme.of(context).textTheme.headline5,
-              ),
               ElevatedButton(onPressed: () {}, child: Text(alertSubType))
             ],
           ),
