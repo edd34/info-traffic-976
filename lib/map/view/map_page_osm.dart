@@ -128,7 +128,7 @@ class _MainExampleState extends State<MainExample> with OSMMixinObserver {
   }
 
   Future<void> mapIsInitialized() async {
-    await controller.setZoom(zoomLevel: 12);
+    await controller.setZoom(zoomLevel: 15);
     // await controller.setMarkerOfStaticPoint(
     //   id: "line 1",
     //   markerIcon: MarkerIcon(
@@ -285,7 +285,7 @@ class _MainExampleState extends State<MainExample> with OSMMixinObserver {
                   print("map is ready");
                 }
               },
-              initZoom: 8,
+              initZoom: 15,
               minZoomLevel: 3,
               maxZoomLevel: 18,
               stepZoom: 1.0,
