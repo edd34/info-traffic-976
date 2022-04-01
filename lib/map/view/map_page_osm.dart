@@ -48,18 +48,18 @@ class _MainExampleState extends State<MainExample> with OSMMixinObserver {
   void initState() {
     super.initState();
     controller = CustomController(
-      initMapWithUserPosition: false,
-      initPosition: GeoPoint(
-        latitude: 47.4358055,
-        longitude: 8.4737324,
-      ),
-      // areaLimit: BoundingBox(
-      //   east: 10.4922941,
-      //   north: 47.8084648,
-      //   south: 45.817995,
-      //   west: 5.9559113,
-      // ),
-    );
+        // initMapWithUserPosition: false,
+        // initPosition: GeoPoint(
+        //   latitude: 47.4358055,
+        //   longitude: 8.4737324,
+        // ),
+        // areaLimit: BoundingBox(
+        //   east: 10.4922941,
+        //   north: 47.8084648,
+        //   south: 45.817995,
+        //   west: 5.9559113,
+        // ),
+        );
     controller.addObserver(this);
     scaffoldKey = GlobalKey<ScaffoldState>();
     controller.listenerMapLongTapping.addListener(() async {
