@@ -153,14 +153,12 @@ class _MainExampleState extends State<MainExample> with OSMMixinObserver {
     await controller.setStaticPosition(
       [
         GeoPointWithOrientation(
-          latitude: 47.4433594,
-          longitude: 8.4680184,
-          angle: pi / 4,
+          latitude: -12.84363,
+          longitude: 45.11622,
         ),
         GeoPointWithOrientation(
-          latitude: 47.4517782,
-          longitude: 8.4716146,
-          angle: pi / 2,
+          latitude: -12.84423,
+          longitude: 45.11675,
         ),
       ],
       'line 2',
@@ -201,268 +199,162 @@ class _MainExampleState extends State<MainExample> with OSMMixinObserver {
     return Scaffold(
       key: scaffoldKey,
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        title: const Text('OSM'),
-        leading: ValueListenableBuilder<bool>(
-          valueListenable: advPickerNotifierActivation,
-          builder: (ctx, isAdvancedPicker, _) {
-            if (isAdvancedPicker) {
-              return IconButton(
-                onPressed: () {
-                  advPickerNotifierActivation.value = false;
-                  controller.cancelAdvancedPositionPicker();
-                },
-                icon: const Icon(Icons.close),
-              );
-            }
-            return const SizedBox.shrink();
-          },
-        ),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.info),
-            onPressed: () async {
-              await Navigator.popAndPushNamed(context, '/second');
-            },
-          ),
-          Builder(builder: (ctx) {
-            return GestureDetector(
-              onLongPress: () => drawMultiRoads(),
-              onDoubleTap: () async {
-                await controller.clearAllRoads();
-              },
-              child: IconButton(
-                onPressed: () => roadActionBt(ctx),
-                icon: const Icon(Icons.map),
+      body: Stack(
+        children: [
+          OSMFlutter(
+            controller: controller,
+            trackMyPosition: false,
+            androidHotReloadSupport: true,
+            mapIsLoading: Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  CircularProgressIndicator(),
+                  Text('Chargement de la carte..'),
+                ],
               ),
-            );
-          }),
-          IconButton(
-            onPressed: () async {
-              visibilityZoomNotifierActivation.value =
-                  !visibilityZoomNotifierActivation.value;
-              zoomNotifierActivation.value = !zoomNotifierActivation.value;
-            },
-            icon: const Icon(Icons.zoom_out_map),
-          ),
-          IconButton(
-            onPressed: () async {
-              await Navigator.pushNamed(context, '/picker-result');
-            },
-            icon: const Icon(Icons.search),
-          ),
-          IconButton(
-            icon: const Icon(Icons.select_all),
-            onPressed: () async {
-              if (advPickerNotifierActivation.value == false) {
-                advPickerNotifierActivation.value = true;
-                await controller.advancedPositionPicker();
+            ),
+            onMapIsReady: (isReady) {
+              if (isReady) {
+                print('map is ready');
               }
             },
-          )
-        ],
-      ),
-      body: Container(
-        child: Stack(
-          children: [
-            OSMFlutter(
-              controller: controller,
-              trackMyPosition: false,
-              androidHotReloadSupport: true,
-              mapIsLoading: Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    CircularProgressIndicator(),
-                    Text('Chargement de la carte..'),
-                  ],
+            initZoom: 15,
+            minZoomLevel: 3,
+            userLocationMarker: UserLocationMaker(
+              personMarker: const MarkerIcon(
+                icon: Icon(
+                  Icons.location_history_rounded,
+                  color: Colors.red,
+                  size: 48,
                 ),
               ),
-              onMapIsReady: (isReady) {
-                if (isReady) {
-                  print('map is ready');
-                }
-              },
-              initZoom: 15,
-              minZoomLevel: 3,
-              userLocationMarker: UserLocationMaker(
-                personMarker: const MarkerIcon(
-                  icon: Icon(
-                    Icons.location_history_rounded,
-                    color: Colors.red,
-                    size: 48,
-                  ),
-                ),
-                directionArrowMarker: const MarkerIcon(
-                  icon: Icon(
-                    Icons.double_arrow,
-                    size: 48,
-                  ),
+              directionArrowMarker: const MarkerIcon(
+                icon: Icon(
+                  Icons.gps_fixed,
+                  color: Colors.blue,
+                  size: 100,
                 ),
               ),
-              showContributorBadgeForOSM: true,
-              onLocationChanged: (myLocation) {
-                print(myLocation);
-              },
-              onGeoPointClicked: (geoPoint) async {
-                // if (geoPoint ==
-                //     GeoPoint(latitude: 47.442475, longitude: 8.4680389)) {
-                //   await controller.setMarkerIcon(
-                //       geoPoint,
-                //       const MarkerIcon(
-                //         icon: const Icon(
-                //           Icons.bus_alert,
-                //           color: Colors.blue,
-                //           size: 24,
-                //         ),
-                //       ));
-                // }
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(
-                      '${geoPoint.toMap().toString()}',
-                    ),
-                    action: SnackBarAction(
-                      onPressed: () =>
-                          ScaffoldMessenger.of(context).hideCurrentSnackBar(),
-                      label: 'hide',
-                    ),
+            ),
+            showContributorBadgeForOSM: true,
+            onLocationChanged: (myLocation) {
+              print(myLocation);
+            },
+            onGeoPointClicked: (geoPoint) async {
+              // if (geoPoint ==
+              //     GeoPoint(latitude: 47.442475, longitude: 8.4680389)) {
+              //   await controller.setMarkerIcon(
+              //       geoPoint,
+              //       const MarkerIcon(
+              //         icon: const Icon(
+              //           Icons.bus_alert,
+              //           color: Colors.blue,
+              //           size: 24,
+              //         ),
+              //       ));
+              // }
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    '${geoPoint.toMap().toString()}',
+                  ),
+                  action: SnackBarAction(
+                    onPressed: () =>
+                        ScaffoldMessenger.of(context).hideCurrentSnackBar(),
+                    label: 'hide',
+                  ),
+                ),
+              );
+            },
+            markerOption: MarkerOption(
+              defaultMarker: const MarkerIcon(
+                icon: Icon(
+                  Icons.home,
+                  color: Colors.orange,
+                  size: 64,
+                ),
+              ),
+              advancedPickerMarker: const MarkerIcon(
+                icon: const Icon(
+                  Icons.location_searching,
+                  color: Colors.green,
+                  size: 64,
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: 10,
+            left: 10,
+            child: ValueListenableBuilder<bool>(
+              valueListenable: advPickerNotifierActivation,
+              builder: (ctx, visible, child) {
+                return Visibility(
+                  visible: visible,
+                  child: AnimatedOpacity(
+                    opacity: visible ? 1.0 : 0.0,
+                    duration: const Duration(milliseconds: 500),
+                    child: child,
                   ),
                 );
               },
-              staticPoints: [
-                StaticPositionGeoPoint(
-                  'line 1',
-                  const MarkerIcon(
-                    icon: Icon(
-                      Icons.train,
-                      color: Colors.green,
-                      size: 48,
+              child: FloatingActionButton(
+                key: UniqueKey(),
+                child: const Icon(Icons.arrow_forward),
+                heroTag: 'confirmAdvPicker',
+                onPressed: () async {
+                  advPickerNotifierActivation.value = false;
+                  GeoPoint p = await controller.selectAdvancedPositionPicker();
+                  print(p);
+                },
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: 10,
+            left: 10,
+            child: ValueListenableBuilder<bool>(
+              valueListenable: visibilityZoomNotifierActivation,
+              builder: (ctx, visibility, child) {
+                return Visibility(
+                  visible: visibility,
+                  child: child!,
+                );
+              },
+              child: ValueListenableBuilder<bool>(
+                valueListenable: zoomNotifierActivation,
+                builder: (ctx, isVisible, child) {
+                  return AnimatedOpacity(
+                    opacity: isVisible ? 1.0 : 0.0,
+                    onEnd: () {
+                      visibilityZoomNotifierActivation.value = isVisible;
+                    },
+                    duration: const Duration(milliseconds: 500),
+                    child: child,
+                  );
+                },
+                child: Column(
+                  children: [
+                    ElevatedButton(
+                      child: const Icon(Icons.add),
+                      onPressed: () async {
+                        controller.zoomIn();
+                      },
                     ),
-                  ),
-                  [
-                    GeoPoint(latitude: 47.4333594, longitude: 8.4680184),
-                    GeoPoint(latitude: 47.4317782, longitude: 8.4716146),
+                    ElevatedButton(
+                      child: const Icon(Icons.remove),
+                      onPressed: () async {
+                        controller.zoomOut();
+                      },
+                    ),
                   ],
                 ),
-                /*StaticPositionGeoPoint(
-                      "line 2",
-                      MarkerIcon(
-                        icon: Icon(
-                          Icons.train,
-                          color: Colors.red,
-                          size: 48,
-                        ),
-                      ),
-                      [
-                        GeoPoint(latitude: 47.4433594, longitude: 8.4680184),
-                        GeoPoint(latitude: 47.4517782, longitude: 8.4716146),
-                      ],
-                    )*/
-              ],
-              roadConfiguration: RoadConfiguration(
-                startIcon: const MarkerIcon(
-                  icon: Icon(
-                    Icons.person,
-                    size: 64,
-                    color: Colors.brown,
-                  ),
-                ),
-                middleIcon: const MarkerIcon(
-                  icon: Icon(Icons.location_history_sharp),
-                ),
-                roadColor: Colors.red,
-              ),
-              markerOption: MarkerOption(
-                defaultMarker: const MarkerIcon(
-                  icon: Icon(
-                    Icons.home,
-                    color: Colors.orange,
-                    size: 64,
-                  ),
-                ),
-                advancedPickerMarker: const MarkerIcon(
-                  icon: const Icon(
-                    Icons.location_searching,
-                    color: Colors.green,
-                    size: 64,
-                  ),
-                ),
               ),
             ),
-            Positioned(
-              bottom: 10,
-              left: 10,
-              child: ValueListenableBuilder<bool>(
-                valueListenable: advPickerNotifierActivation,
-                builder: (ctx, visible, child) {
-                  return Visibility(
-                    visible: visible,
-                    child: AnimatedOpacity(
-                      opacity: visible ? 1.0 : 0.0,
-                      duration: const Duration(milliseconds: 500),
-                      child: child,
-                    ),
-                  );
-                },
-                child: FloatingActionButton(
-                  key: UniqueKey(),
-                  child: const Icon(Icons.arrow_forward),
-                  heroTag: 'confirmAdvPicker',
-                  onPressed: () async {
-                    advPickerNotifierActivation.value = false;
-                    GeoPoint p =
-                        await controller.selectAdvancedPositionPicker();
-                    print(p);
-                  },
-                ),
-              ),
-            ),
-            Positioned(
-              bottom: 10,
-              left: 10,
-              child: ValueListenableBuilder<bool>(
-                valueListenable: visibilityZoomNotifierActivation,
-                builder: (ctx, visibility, child) {
-                  return Visibility(
-                    visible: visibility,
-                    child: child!,
-                  );
-                },
-                child: ValueListenableBuilder<bool>(
-                  valueListenable: zoomNotifierActivation,
-                  builder: (ctx, isVisible, child) {
-                    return AnimatedOpacity(
-                      opacity: isVisible ? 1.0 : 0.0,
-                      onEnd: () {
-                        visibilityZoomNotifierActivation.value = isVisible;
-                      },
-                      duration: const Duration(milliseconds: 500),
-                      child: child,
-                    );
-                  },
-                  child: Column(
-                    children: [
-                      ElevatedButton(
-                        child: const Icon(Icons.add),
-                        onPressed: () async {
-                          controller.zoomIn();
-                        },
-                      ),
-                      ElevatedButton(
-                        child: const Icon(Icons.remove),
-                        onPressed: () async {
-                          controller.zoomOut();
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
       floatingActionButton: ValueListenableBuilder<bool>(
         valueListenable: showFab,
@@ -497,197 +389,9 @@ class _MainExampleState extends State<MainExample> with OSMMixinObserver {
     );
   }
 
-  void roadActionBt(BuildContext ctx) async {
-    try {
-      await controller.removeLastRoad();
-
-      ///selection geoPoint
-      GeoPoint point = await controller.selectPosition(
-        icon: const MarkerIcon(
-          icon: Icon(
-            Icons.person_pin_circle,
-            color: Colors.amber,
-            size: 100,
-          ),
-        ),
-      );
-      GeoPoint point2 = await controller.selectPosition();
-      showFab.value = false;
-      ValueNotifier<RoadType> notifierRoadType = ValueNotifier(RoadType.car);
-
-      final bottomPersistant = scaffoldKey.currentState!.showBottomSheet(
-        (ctx) {
-          return RoadTypeChoiceWidget(
-            setValueCallback: (roadType) {
-              notifierRoadType.value = roadType;
-            },
-          );
-        },
-        backgroundColor: Colors.transparent,
-        elevation: 0.0,
-      );
-      await bottomPersistant.closed.then((roadType) async {
-        showFab.value = true;
-        RoadInfo roadInformation = await controller.drawRoad(
-          point, point2,
-          roadType: notifierRoadType.value,
-          //interestPoints: [pointM1, pointM2],
-          roadOption: const RoadOption(
-            roadWidth: 10,
-            roadColor: Colors.blue,
-            showMarkerOfPOI: true,
-          ),
-        );
-        print(
-            'duration:${Duration(seconds: roadInformation.duration!.toInt()).inMinutes}');
-        print('distance:${roadInformation.distance}Km');
-        print(roadInformation.route.length);
-        // final box = await BoundingBox.fromGeoPointsAsync([point2, point]);
-        // controller.zoomToBoundingBox(
-        //   box,
-        //   paddinInPixel: 64,
-        // );
-      });
-    } on RoadException catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            '${e.errorMessage()}',
-          ),
-        ),
-      );
-    }
-  }
-
   @override
   Future<void> mapRestored() async {
     super.mapRestored();
     print('log map restored');
-  }
-
-  void drawMultiRoads() async {
-    /*
-      8.4638911095,47.4834379430|8.5046595453,47.4046149269
-      8.5244329867,47.4814981476|8.4129691189,47.3982152237
-      8.4371175094,47.4519015578|8.5147623089,47.4321999727
-     */
-
-    final configs = [
-      MultiRoadConfiguration(
-        startPoint: GeoPoint(
-          latitude: 47.4834379430,
-          longitude: 8.4638911095,
-        ),
-        destinationPoint: GeoPoint(
-          latitude: 47.4046149269,
-          longitude: 8.5046595453,
-        ),
-      ),
-      MultiRoadConfiguration(
-          startPoint: GeoPoint(
-            latitude: 47.4814981476,
-            longitude: 8.5244329867,
-          ),
-          destinationPoint: GeoPoint(
-            latitude: 47.3982152237,
-            longitude: 8.4129691189,
-          ),
-          roadOptionConfiguration: const MultiRoadOption(
-            roadColor: Colors.orange,
-          )),
-      MultiRoadConfiguration(
-        startPoint: GeoPoint(
-          latitude: 47.4519015578,
-          longitude: 8.4371175094,
-        ),
-        destinationPoint: GeoPoint(
-          latitude: 47.4321999727,
-          longitude: 8.5147623089,
-        ),
-      ),
-    ];
-    final listRoadInfo = await controller.drawMultipleRoad(
-      configs,
-      commonRoadOption: const MultiRoadOption(
-        roadColor: Colors.red,
-      ),
-    );
-    print(listRoadInfo);
-  }
-}
-
-class RoadTypeChoiceWidget extends StatelessWidget {
-  final Function(RoadType road) setValueCallback;
-
-  RoadTypeChoiceWidget({
-    required this.setValueCallback,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 96,
-      child: WillPopScope(
-        onWillPop: () async => false,
-        child: Align(
-          alignment: Alignment.bottomCenter,
-          child: Container(
-            height: 64,
-            width: 196,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(8.0),
-            ),
-            alignment: Alignment.center,
-            margin: const EdgeInsets.all(12.0),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                TextButton(
-                  onPressed: () {
-                    setValueCallback(RoadType.car);
-                    Navigator.pop(context, RoadType.car);
-                  },
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: const [
-                      Icon(Icons.directions_car),
-                      Text('Car'),
-                    ],
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {
-                    setValueCallback(RoadType.bike);
-                    Navigator.pop(context);
-                  },
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: const [
-                      Icon(Icons.directions_bike),
-                      Text('Bike'),
-                    ],
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {
-                    setValueCallback(RoadType.foot);
-                    Navigator.pop(context);
-                  },
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: const [
-                      Icon(Icons.directions_walk),
-                      Text('Foot'),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
   }
 }
