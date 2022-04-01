@@ -56,13 +56,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     AlertAddPage(),
   ];
 
-  @override
-  void initState() {
-    super.initState();
-    refresh_alert(context);
-  }
-
-  void refresh_alert(BuildContext context) async {
+  Future refreshAlert(BuildContext context) async {
     final alertProvider = Provider.of<AlertProvider>(context, listen: false);
     final trafficAlertProvider =
         Provider.of<TrafficAlertProvider>(context, listen: false);
@@ -157,7 +151,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         actions: [
           IconButton(
             onPressed: () {
-              refresh_alert(context);
+              refreshAlert(context);
             },
             icon: const Icon(Icons.refresh),
           ),
