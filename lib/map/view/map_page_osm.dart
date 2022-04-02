@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 
@@ -62,69 +60,6 @@ class _MainExampleState extends State<MainExample> with OSMMixinObserver {
         );
     controller.addObserver(this);
     scaffoldKey = GlobalKey<ScaffoldState>();
-    controller.listenerMapLongTapping.addListener(() async {
-      if (controller.listenerMapLongTapping.value != null) {
-        print(controller.listenerMapLongTapping.value);
-        final randNum = Random.secure().nextInt(100).toString();
-        print(randNum);
-        await controller.addMarker(
-          controller.listenerMapLongTapping.value!,
-          markerIcon: MarkerIcon(
-            iconWidget: SizedBox.fromSize(
-              size: const Size.square(48),
-              child: Stack(
-                children: [
-                  const Icon(
-                    Icons.store,
-                    color: Colors.brown,
-                    size: 48,
-                  ),
-                  Text(
-                    randNum,
-                    style: const TextStyle(fontSize: 18),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          //angle: pi / 3,
-        );
-      }
-    });
-    controller.listenerMapSingleTapping.addListener(() async {
-      if (controller.listenerMapSingleTapping.value != null) {
-        if (lastGeoPoint.value != null) {
-          await controller.removeMarker(lastGeoPoint.value!);
-        }
-        print(controller.listenerMapSingleTapping.value);
-        lastGeoPoint.value = controller.listenerMapSingleTapping.value;
-        await controller.addMarker(
-          lastGeoPoint.value!,
-          markerIcon: const MarkerIcon(
-            icon: Icon(
-              Icons.person_pin,
-              color: Colors.red,
-              size: 32,
-            ),
-            // assetMarker: AssetMarker(
-            //   image: const AssetImage('asset/pin.png'),
-          ),
-          // assetMarker: AssetMarker(
-          //   image: AssetImage("asset/pin.png"),
-          //   //scaleAssetImage: 2,
-          // ),
-
-          //angle: -pi / 4,
-        );
-      }
-    });
-    controller.listenerRegionIsChanging.addListener(() async {
-      if (controller.listenerRegionIsChanging.value != null) {
-        print(controller.listenerRegionIsChanging.value);
-      }
-    });
-
-    //controller.listenerMapIsReady.addListener(mapIsInitialized);
   }
 
   Future<void> mapIsInitialized() async {
@@ -140,12 +75,12 @@ class _MainExampleState extends State<MainExample> with OSMMixinObserver {
     //   ),
     // );
     await controller.setMarkerOfStaticPoint(
-      id: 'line 2',
+      id: 'traffic alert',
       markerIcon: const MarkerIcon(
         icon: Icon(
-          Icons.train,
-          color: Colors.orange,
-          size: 48,
+          Icons.warning,
+          color: Colors.red,
+          size: 100,
         ),
       ),
     );
@@ -161,7 +96,7 @@ class _MainExampleState extends State<MainExample> with OSMMixinObserver {
           longitude: 45.11675,
         ),
       ],
-      'line 2',
+      'traffic alert',
     );
     final bounds = await controller.bounds;
     print(bounds.toString());
@@ -199,162 +134,81 @@ class _MainExampleState extends State<MainExample> with OSMMixinObserver {
     return Scaffold(
       key: scaffoldKey,
       resizeToAvoidBottomInset: false,
-      body: Stack(
-        children: [
-          OSMFlutter(
-            controller: controller,
-            trackMyPosition: false,
-            androidHotReloadSupport: true,
-            mapIsLoading: Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  CircularProgressIndicator(),
-                  Text('Chargement de la carte..'),
-                ],
-              ),
-            ),
-            onMapIsReady: (isReady) {
-              if (isReady) {
-                print('map is ready');
-              }
-            },
-            initZoom: 15,
-            minZoomLevel: 3,
-            userLocationMarker: UserLocationMaker(
-              personMarker: const MarkerIcon(
-                icon: Icon(
-                  Icons.location_history_rounded,
-                  color: Colors.red,
-                  size: 48,
-                ),
-              ),
-              directionArrowMarker: const MarkerIcon(
-                icon: Icon(
-                  Icons.gps_fixed,
-                  color: Colors.blue,
-                  size: 100,
-                ),
-              ),
-            ),
-            showContributorBadgeForOSM: true,
-            onLocationChanged: (myLocation) {
-              print(myLocation);
-            },
-            onGeoPointClicked: (geoPoint) async {
-              // if (geoPoint ==
-              //     GeoPoint(latitude: 47.442475, longitude: 8.4680389)) {
-              //   await controller.setMarkerIcon(
-              //       geoPoint,
-              //       const MarkerIcon(
-              //         icon: const Icon(
-              //           Icons.bus_alert,
-              //           color: Colors.blue,
-              //           size: 24,
-              //         ),
-              //       ));
-              // }
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(
-                    '${geoPoint.toMap().toString()}',
-                  ),
-                  action: SnackBarAction(
-                    onPressed: () =>
-                        ScaffoldMessenger.of(context).hideCurrentSnackBar(),
-                    label: 'hide',
-                  ),
-                ),
-              );
-            },
-            markerOption: MarkerOption(
-              defaultMarker: const MarkerIcon(
-                icon: Icon(
-                  Icons.home,
-                  color: Colors.orange,
-                  size: 64,
-                ),
-              ),
-              advancedPickerMarker: const MarkerIcon(
-                icon: const Icon(
-                  Icons.location_searching,
-                  color: Colors.green,
-                  size: 64,
-                ),
-              ),
+      body: OSMFlutter(
+        controller: controller,
+        trackMyPosition: false,
+        androidHotReloadSupport: true,
+        mapIsLoading: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              CircularProgressIndicator(),
+              Text('Chargement de la carte..'),
+            ],
+          ),
+        ),
+        onMapIsReady: (isReady) {
+          if (isReady) {
+            print('map is ready');
+          }
+        },
+        initZoom: 15,
+        minZoomLevel: 3,
+        userLocationMarker: UserLocationMaker(
+          personMarker: const MarkerIcon(
+            icon: Icon(
+              Icons.location_history_rounded,
+              color: Colors.red,
+              size: 48,
             ),
           ),
-          Positioned(
-            bottom: 10,
-            left: 10,
-            child: ValueListenableBuilder<bool>(
-              valueListenable: advPickerNotifierActivation,
-              builder: (ctx, visible, child) {
-                return Visibility(
-                  visible: visible,
-                  child: AnimatedOpacity(
-                    opacity: visible ? 1.0 : 0.0,
-                    duration: const Duration(milliseconds: 500),
-                    child: child,
-                  ),
-                );
-              },
-              child: FloatingActionButton(
-                key: UniqueKey(),
-                child: const Icon(Icons.arrow_forward),
-                heroTag: 'confirmAdvPicker',
-                onPressed: () async {
-                  advPickerNotifierActivation.value = false;
-                  GeoPoint p = await controller.selectAdvancedPositionPicker();
-                  print(p);
-                },
-              ),
+          directionArrowMarker: const MarkerIcon(
+            icon: Icon(
+              Icons.gps_fixed,
+              color: Colors.blue,
+              size: 100,
             ),
           ),
-          Positioned(
-            bottom: 10,
-            left: 10,
-            child: ValueListenableBuilder<bool>(
-              valueListenable: visibilityZoomNotifierActivation,
-              builder: (ctx, visibility, child) {
-                return Visibility(
-                  visible: visibility,
-                  child: child!,
-                );
-              },
-              child: ValueListenableBuilder<bool>(
-                valueListenable: zoomNotifierActivation,
-                builder: (ctx, isVisible, child) {
-                  return AnimatedOpacity(
-                    opacity: isVisible ? 1.0 : 0.0,
-                    onEnd: () {
-                      visibilityZoomNotifierActivation.value = isVisible;
-                    },
-                    duration: const Duration(milliseconds: 500),
-                    child: child,
-                  );
-                },
-                child: Column(
-                  children: [
-                    ElevatedButton(
-                      child: const Icon(Icons.add),
-                      onPressed: () async {
-                        controller.zoomIn();
-                      },
-                    ),
-                    ElevatedButton(
-                      child: const Icon(Icons.remove),
-                      onPressed: () async {
-                        controller.zoomOut();
-                      },
-                    ),
-                  ],
-                ),
+        ),
+        showContributorBadgeForOSM: true,
+        onLocationChanged: (myLocation) {
+          // TODO : calculer distance aux obstacles
+          print(myLocation);
+        },
+        onGeoPointClicked: (geoPoint) async {
+          // TODO: afficher les informations sur un obstacles
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            // todo : extraire dans une fonction pour pouvoir réutiliser
+            SnackBar(
+              content: Text(
+                '${geoPoint.toMap().toString()}',
+              ),
+              action: SnackBarAction(
+                onPressed: () =>
+                    ScaffoldMessenger.of(context).hideCurrentSnackBar(),
+                label: 'ok',
               ),
             ),
+          );
+        },
+        markerOption: MarkerOption(
+          defaultMarker: const MarkerIcon(
+            icon: Icon(
+              Icons.home,
+              color: Colors.orange,
+              size: 64,
+            ),
           ),
-        ],
+          advancedPickerMarker: const MarkerIcon(
+            icon: const Icon(
+              Icons.location_searching,
+              color: Colors.green,
+              size: 64,
+            ),
+          ),
+        ),
       ),
       floatingActionButton: ValueListenableBuilder<bool>(
         valueListenable: showFab,
