@@ -147,18 +147,18 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             }
           },
         ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              refreshAlert(context);
-            },
-            icon: const Icon(Icons.refresh),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.sort),
-          ),
-        ],
+        // actions: [
+        //   IconButton(
+        //     onPressed: () {
+        //       refreshAlert(context);
+        //     },
+        //     icon: const Icon(Icons.refresh),
+        //   ),
+        //   IconButton(
+        //     onPressed: () {},
+        //     icon: const Icon(Icons.sort),
+        //   ),
+        // ],
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
