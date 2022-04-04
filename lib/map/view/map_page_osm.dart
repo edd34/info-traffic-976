@@ -121,6 +121,7 @@ class _MainExampleState extends State<MainExample> with OSMMixinObserver {
   Future<void> mapIsReady(bool isReady) async {
     if (isReady) {
       await mapIsInitialized();
+      var timer = Timer.periodic(const Duration(minutes: 2), myCallback);
     }
   }
 
@@ -132,6 +133,27 @@ class _MainExampleState extends State<MainExample> with OSMMixinObserver {
     //controller.listenerMapIsReady.removeListener(mapIsInitialized);
     controller.dispose();
     super.dispose();
+  }
+
+  void myCallback(Timer timer) async {
+    final alertProvider = Provider.of<AlertProvider>(context, listen: false);
+    final trafficAlertProvider =
+        Provider.of<TrafficAlertProvider>(context, listen: false);
+    var res1 = await AlertAPIHelper.getAlertTable();
+    var res2 = await TrafficAlertAPIHelper.getTrafficAlert();
+    print(res1.data);
+    print(res2.data);
+    alertProvider.setAlertTable(res1.data);
+    trafficAlertProvider.setTrafficAlert(res2.data);
+    print(trafficAlertProvider.trafficAlert);
+    List<GeoPoint> listGeoPts = [];
+    trafficAlertProvider.trafficAlert.forEach((element) async {
+      listGeoPts.add(
+        GeoPoint(latitude: element.lat, longitude: element.lon),
+      );
+    });
+    await controller.setStaticPosition(listGeoPts, "traffic alert");
+    print(DateTime.now());
   }
 
   @override
