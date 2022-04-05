@@ -6,6 +6,7 @@ import 'package:info_traffic_976/alert/providers/traffic_alert.dart';
 import 'package:info_traffic_976/alert/services/alert_api.dart';
 import 'package:info_traffic_976/alert/services/traffic_alert_api.dart';
 import 'package:provider/provider.dart';
+import 'package:wakelock/wakelock.dart';
 
 class CustomController extends MapController {
   CustomController({
@@ -65,6 +66,7 @@ class _MainExampleState extends State<MainExample> with OSMMixinObserver {
         );
     controller.addObserver(this);
     scaffoldKey = GlobalKey<ScaffoldState>();
+    Wakelock.enable();
   }
 
   Future<void> mapIsInitialized() async {
@@ -132,6 +134,7 @@ class _MainExampleState extends State<MainExample> with OSMMixinObserver {
     }
     //controller.listenerMapIsReady.removeListener(mapIsInitialized);
     controller.dispose();
+    Wakelock.disable();
     super.dispose();
   }
 
