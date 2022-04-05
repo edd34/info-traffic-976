@@ -52,18 +52,13 @@ class _MainExampleState extends State<MainExample> with OSMMixinObserver {
   void initState() {
     super.initState();
     controller = CustomController(
-        // initMapWithUserPosition: false,
-        // initPosition: GeoPoint(
-        //   latitude: 47.4358055,
-        //   longitude: 8.4737324,
-        // ),
-        // areaLimit: BoundingBox(
-        //   east: 10.4922941,
-        //   north: 47.8084648,
-        //   south: 45.817995,
-        //   west: 5.9559113,
-        // ),
-        );
+      areaLimit: BoundingBox(
+        north: -12.630288,
+        south: -13.009910,
+        east: 44.985580,
+        west: 45.30830,
+      ),
+    );
     controller.addObserver(this);
     scaffoldKey = GlobalKey<ScaffoldState>();
     Wakelock.enable();
@@ -92,19 +87,19 @@ class _MainExampleState extends State<MainExample> with OSMMixinObserver {
       ),
     );
 
-    await controller.setStaticPosition(
-      [
-        GeoPointWithOrientation(
-          latitude: -12.84363,
-          longitude: 45.11622,
-        ),
-        GeoPointWithOrientation(
-          latitude: -12.84423,
-          longitude: 45.11675,
-        ),
-      ],
-      'traffic alert',
-    );
+    // await controller.setStaticPosition(
+    //   [
+    //     GeoPointWithOrientation(
+    //       latitude: -12.84363,
+    //       longitude: 45.11622,
+    //     ),
+    //     GeoPointWithOrientation(
+    //       latitude: -12.84423,
+    //       longitude: 45.11675,
+    //     ),
+    //   ],
+    //   'traffic alert',
+    // );
     final bounds = await controller.bounds;
     print(bounds.toString());
     await controller.addMarker(
@@ -124,6 +119,7 @@ class _MainExampleState extends State<MainExample> with OSMMixinObserver {
     if (isReady) {
       await mapIsInitialized();
       var timer = Timer.periodic(const Duration(minutes: 2), myCallback);
+      myCallback(timer);
     }
   }
 
