@@ -66,16 +66,7 @@ class _MainExampleState extends State<MainExample> with OSMMixinObserver {
 
   Future<void> mapIsInitialized() async {
     await controller.setZoom(zoomLevel: 15);
-    // await controller.setMarkerOfStaticPoint(
-    //   id: "line 1",
-    //   markerIcon: MarkerIcon(
-    //     icon: Icon(
-    //       Icons.train,
-    //       color: Colors.red,
-    //       size: 48,
-    //     ),
-    //   ),
-    // );
+
     await controller.setMarkerOfStaticPoint(
       id: 'traffic alert',
       markerIcon: const MarkerIcon(
@@ -87,19 +78,6 @@ class _MainExampleState extends State<MainExample> with OSMMixinObserver {
       ),
     );
 
-    // await controller.setStaticPosition(
-    //   [
-    //     GeoPointWithOrientation(
-    //       latitude: -12.84363,
-    //       longitude: 45.11622,
-    //     ),
-    //     GeoPointWithOrientation(
-    //       latitude: -12.84423,
-    //       longitude: 45.11675,
-    //     ),
-    //   ],
-    //   'traffic alert',
-    // );
     final bounds = await controller.bounds;
     print(bounds.toString());
     await controller.addMarker(
@@ -228,7 +206,7 @@ class _MainExampleState extends State<MainExample> with OSMMixinObserver {
             ),
           ),
           advancedPickerMarker: const MarkerIcon(
-            icon: const Icon(
+            icon: Icon(
               Icons.location_searching,
               color: Colors.green,
               size: 64,
@@ -271,25 +249,28 @@ class _MainExampleState extends State<MainExample> with OSMMixinObserver {
               }
               return child!;
             },
-            child: FloatingActionButton(
-              onPressed: () async {
-                if (!trackingNotifier.value) {
-                  await controller.currentLocation();
-                  await controller.enableTracking();
-                  //await controller.zoom(5.0);
-                } else {
-                  await controller.disabledTracking();
-                }
-                trackingNotifier.value = !trackingNotifier.value;
-              },
-              child: ValueListenableBuilder<bool>(
-                valueListenable: trackingNotifier,
-                builder: (ctx, isTracking, _) {
-                  if (isTracking) {
-                    return const Icon(Icons.gps_off_sharp);
+            child: Container(
+              margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+              child: FloatingActionButton(
+                onPressed: () async {
+                  if (!trackingNotifier.value) {
+                    await controller.currentLocation();
+                    await controller.enableTracking();
+                    //await controller.zoom(5.0);
+                  } else {
+                    await controller.disabledTracking();
                   }
-                  return const Icon(Icons.my_location);
+                  trackingNotifier.value = !trackingNotifier.value;
                 },
+                child: ValueListenableBuilder<bool>(
+                  valueListenable: trackingNotifier,
+                  builder: (ctx, isTracking, _) {
+                    if (isTracking) {
+                      return const Icon(Icons.gps_off_sharp);
+                    }
+                    return const Icon(Icons.my_location);
+                  },
+                ),
               ),
             ),
           ),
