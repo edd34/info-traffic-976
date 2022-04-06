@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 import 'package:info_traffic_976/alert/providers/alert_providers.dart';
+import 'package:info_traffic_976/alert/providers/position_provider.dart';
 import 'package:info_traffic_976/alert/providers/traffic_alert.dart';
 import 'package:info_traffic_976/alert/services/alert_api.dart';
 import 'package:info_traffic_976/alert/services/traffic_alert_api.dart';
@@ -80,16 +81,16 @@ class _MainExampleState extends State<MainExample> with OSMMixinObserver {
 
     final bounds = await controller.bounds;
     print(bounds.toString());
-    await controller.addMarker(
-      GeoPoint(latitude: 47.442475, longitude: 8.4680389),
-      markerIcon: const MarkerIcon(
-        icon: Icon(
-          Icons.car_repair,
-          color: Colors.black45,
-          size: 48,
-        ),
-      ),
-    );
+    // await controller.addMarker(
+    //   GeoPoint(latitude: 47.442475, longitude: 8.4680389),
+    //   markerIcon: const MarkerIcon(
+    //     icon: Icon(
+    //       Icons.car_repair,
+    //       color: Colors.black45,
+    //       size: 48,
+    //     ),
+    //   ),
+    // );
   }
 
   @override
@@ -135,6 +136,8 @@ class _MainExampleState extends State<MainExample> with OSMMixinObserver {
 
   @override
   Widget build(BuildContext context) {
+    final localisationProvider =
+        Provider.of<LocalisationProvider>(context, listen: false);
     return Scaffold(
       key: scaffoldKey,
       resizeToAvoidBottomInset: false,
@@ -178,6 +181,8 @@ class _MainExampleState extends State<MainExample> with OSMMixinObserver {
         showContributorBadgeForOSM: true,
         onLocationChanged: (myLocation) {
           // TODO : calculer distance aux obstacles
+
+          localisationProvider.setCurrentPosition(value: myLocation);
           print(myLocation);
         },
         onGeoPointClicked: (geoPoint) async {
