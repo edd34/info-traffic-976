@@ -8,6 +8,6 @@ class LocalisationProvider extends ChangeNotifier {
   late GeoPoint _currentPosition;
 
   GeoPoint get currentPosition => _currentPosition;
-  void setShouldRefresh({required GeoPoint value}) =>
+  void setCurrentPosition({required GeoPoint value}) =>
       {_currentPosition = value};
 }
