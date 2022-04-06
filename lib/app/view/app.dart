@@ -12,7 +12,6 @@ import 'package:info_traffic_976/alert/providers/position_provider.dart';
 import 'package:info_traffic_976/alert/providers/traffic_alert.dart';
 import 'package:info_traffic_976/alert/services/alert_api.dart';
 import 'package:info_traffic_976/alert/services/traffic_alert_api.dart';
-import 'package:info_traffic_976/map/map.dart';
 import 'package:info_traffic_976/map/view/map_page_osm.dart';
 import 'package:provider/provider.dart';
 
