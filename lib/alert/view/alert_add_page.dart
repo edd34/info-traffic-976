@@ -2,8 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:info_traffic_976/alert/view/alert_grid_layout.dart';
 import 'package:info_traffic_976/alert/view/search_example.dart';
 
-class AlertAddPage extends StatelessWidget {
+class AlertAddPage extends StatefulWidget {
   const AlertAddPage({Key? key}) : super(key: key);
+
+  @override
+  State<AlertAddPage> createState() => _AlertAddPageState();
+}
+
+class _AlertAddPageState extends State<AlertAddPage>
+    with TickerProviderStateMixin {
+  late TabController _tabController;
+  @override
+  void initState() {
+    _tabController = TabController(length: 3, vsync: this);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -13,8 +26,9 @@ class AlertAddPage extends StatelessWidget {
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(60),
           child: AppBar(
-            bottom: const TabBar(
-              tabs: [
+            bottom: TabBar(
+              controller: _tabController,
+              tabs: const [
                 Tab(icon: Icon(Icons.place)),
                 Tab(icon: Icon(Icons.list_alt)),
                 Tab(icon: Icon(Icons.check)),
@@ -22,8 +36,9 @@ class AlertAddPage extends StatelessWidget {
             ),
           ),
         ),
-        body: const TabBarView(
-          children: [
+        body: TabBarView(
+          controller: _tabController,
+          children: const [
             LocationAppExample(),
             Center(child: GridLayout()),
             Icon(Icons.directions_car, size: 350),
