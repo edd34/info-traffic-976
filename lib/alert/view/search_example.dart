@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
-import 'package:info_traffic_976/alert/providers/position_provider.dart';
+import 'package:info_traffic_976/alert/providers/add_alert_provider.dart';
 import 'package:provider/provider.dart';
 
 class LocationAppExample extends StatefulWidget {

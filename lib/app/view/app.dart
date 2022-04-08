@@ -8,7 +8,7 @@
 import 'package:flutter/material.dart';
 import 'package:info_traffic_976/alert/alert.dart';
 import 'package:info_traffic_976/alert/providers/alert_providers.dart';
-import 'package:info_traffic_976/alert/providers/position_provider.dart';
+import 'package:info_traffic_976/alert/providers/add_alert_provider.dart';
 import 'package:info_traffic_976/alert/providers/traffic_alert.dart';
 import 'package:info_traffic_976/alert/services/alert_api.dart';
 import 'package:info_traffic_976/alert/services/traffic_alert_api.dart';
