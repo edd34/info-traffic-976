@@ -19,8 +19,8 @@ class _LocationAppExampleState extends State<LocationAppExample> {
       children: [
         ElevatedButton(
           onPressed: () async {
-            final localisationProvider =
-                Provider.of<LocalisationProvider>(context, listen: false);
+            final addAlertProvider =
+                Provider.of<AddAlertProvider>(context, listen: false);
             final p = await showSimplePickerLocation(
               context: context,
               isDismissible: true,
@@ -32,7 +32,7 @@ class _LocationAppExampleState extends State<LocationAppExample> {
               radius: 8,
             );
             if (p != null) {
-              localisationProvider.setCurrentPosition(value: p);
+              addAlertProvider.setCurrentPosition(value: p);
             }
           },
           child: const Text('Outil sélection position'),

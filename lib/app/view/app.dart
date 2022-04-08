@@ -24,7 +24,7 @@ class App extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => AlertProvider()),
         ChangeNotifierProvider(create: (context) => TrafficAlertProvider()),
-        ChangeNotifierProvider(create: (context) => LocalisationProvider()),
+        ChangeNotifierProvider(create: (context) => AddAlertProvider()),
       ],
       child: MaterialApp(
         theme: ThemeData(

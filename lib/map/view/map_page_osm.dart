@@ -136,8 +136,8 @@ class _MainExampleState extends State<MainExample> with OSMMixinObserver {
 
   @override
   Widget build(BuildContext context) {
-    final localisationProvider =
-        Provider.of<LocalisationProvider>(context, listen: false);
+    final addAlertProvider =
+        Provider.of<AddAlertProvider>(context, listen: false);
     return Scaffold(
       key: scaffoldKey,
       resizeToAvoidBottomInset: false,
@@ -182,7 +182,7 @@ class _MainExampleState extends State<MainExample> with OSMMixinObserver {
         onLocationChanged: (myLocation) {
           // TODO : calculer distance aux obstacles
 
-          localisationProvider.setCurrentPosition(value: myLocation);
+          addAlertProvider.setCurrentPosition(value: myLocation);
           print(myLocation);
         },
         onGeoPointClicked: (geoPoint) async {
