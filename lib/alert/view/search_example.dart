@@ -15,12 +15,12 @@ class _LocationAppExampleState extends State<LocationAppExample> {
 
   @override
   Widget build(BuildContext context) {
+    final addAlertProvider =
+        Provider.of<AddAlertProvider>(context, listen: false);
     return Column(
       children: [
         ElevatedButton(
           onPressed: () async {
-            final addAlertProvider =
-                Provider.of<AddAlertProvider>(context, listen: false);
             final p = await showSimplePickerLocation(
               context: context,
               isDismissible: true,
@@ -33,6 +33,7 @@ class _LocationAppExampleState extends State<LocationAppExample> {
             );
             if (p != null) {
               addAlertProvider.setCurrentPosition(value: p);
+              print(addAlertProvider.currentPosition);
             }
           },
           child: const Text('Outil sélection position'),
@@ -41,6 +42,19 @@ class _LocationAppExampleState extends State<LocationAppExample> {
           onPressed: () {},
           child: const Text('Utiliser position GPS courante'),
         ),
+        const Text(
+          'Position GPS :',
+          style: TextStyle(fontSize: 30),
+        ),
+        Text(
+          'Latitude : ${addAlertProvider.currentPosition.latitude}',
+          style: const TextStyle(fontSize: 20),
+        ),
+        Text(
+          'Longitude : ${addAlertProvider.currentPosition.longitude}',
+          style: const TextStyle(fontSize: 20),
+        ),
+        const Spacer(),
       ],
     );
   }

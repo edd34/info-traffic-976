@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:info_traffic_976/alert/view/alert_grid_layout.dart';
 import 'package:info_traffic_976/alert/view/search_example.dart';
+import 'package:info_traffic_976/alert/view/submit_alert.dart';
 
 class AlertAddPage extends StatefulWidget {
   const AlertAddPage({Key? key}) : super(key: key);
@@ -40,8 +41,12 @@ class _AlertAddPageState extends State<AlertAddPage>
           controller: _tabController,
           children: const [
             LocationAppExample(),
-            Center(child: GridLayout()),
-            Icon(Icons.directions_car, size: 350),
+            Center(
+              child: GridLayout(),
+            ),
+            Center(
+              child: SubmitAlert(),
+            ),
           ],
         ),
       ),
