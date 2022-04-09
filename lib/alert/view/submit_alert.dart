@@ -58,20 +58,18 @@ class _SubmitAlertState extends State<SubmitAlert> {
         ),
         Text(
           'Type : ${selectedAlert.alertType}',
-          style: TextStyle(fontSize: 20),
+          style: const TextStyle(fontSize: 20),
         ),
         Text(
           'Sous-Type : ${selectedAlert.alertSubtype}',
-          style: TextStyle(fontSize: 20),
+          style: const TextStyle(fontSize: 20),
         ),
         const Spacer(flex: 2),
         Row(
           children: [
             const Spacer(),
             ElevatedButton(
-              onPressed: () {
-                addAlertProvider.reset();
-              },
+              onPressed: addAlertProvider.reset,
               child: const Text(
                 'Effacer',
                 style: TextStyle(fontSize: 25),
