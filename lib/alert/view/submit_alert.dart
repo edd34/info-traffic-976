@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:info_traffic_976/alert/providers/add_alert_provider.dart';
+import 'package:info_traffic_976/alert/services/traffic_alert_api.dart';
 import 'package:provider/provider.dart';
 
 class SubmitAlert extends StatefulWidget {
@@ -77,7 +78,13 @@ class _SubmitAlertState extends State<SubmitAlert> {
             ),
             const Spacer(),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () async {
+                await TrafficAlertAPIHelper.createTrafficAlert(
+                  lon: position.longitude,
+                  lat: position.latitude,
+                  alertId: selectedAlert.id,
+                );
+              },
               child: const Text(
                 'Valider',
                 style: TextStyle(fontSize: 25),
