@@ -7,7 +7,6 @@ environment:
   sdk: ">=2.16.0 <3.0.0"
 
 dependencies:
-  bloc: ^8.0.3
   cached_network_image: ^3.2.0
   dio: ^4.0.4
   flutter:
@@ -24,7 +23,6 @@ dependencies:
   wakelock: ^0.6.1+2
 
 dev_dependencies:
-  bloc_test: any
   flutter_test:
     sdk: flutter
   mocktail: any
